@@ -1,6 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AcWing语法基础课错题记录</title>
+    <url>/2022/01/27/AcWing%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E9%94%99%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<h1 id="AcWing-604-圆的面积"><a href="#AcWing-604-圆的面积" class="headerlink" title="AcWing 604. 圆的面积"></a>AcWing 604. 圆的面积</h1><p>错误代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    float PI=3.14159;</span><br><span class="line">    float R;</span><br><span class="line">    cin&gt;&gt;R;</span><br><span class="line">    cout&lt;&lt;&quot;A=&quot;&lt;&lt; PI*R*R&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试输入 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10.16</span><br></pre></td></tr></table></figure>
+<p>测试输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A=324.293</span><br></pre></td></tr></table></figure>
+<p>标准答案</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A=324.2925</span><br></pre></td></tr></table></figure>
+<p>分析原因：题目说了要保留四位小数，不用printf的话，用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fixed&lt;&lt;setprecisions(4)&lt;&lt;PI*R*R</span><br></pre></td></tr></table></figure>
+<p>试试，记得加头文件<iomanip><br>答案仍错，把float换为double试试<br>测试成功,下面为正确代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;iomanip&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double PI=3.14159;</span><br><span class="line">    double R;</span><br><span class="line">    cin&gt;&gt;R;</span><br><span class="line">    cout&lt;&lt;&quot;A=&quot;&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;PI*R*R&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="AcWing-616-两点间的距离"><a href="#AcWing-616-两点间的距离" class="headerlink" title="AcWing 616.两点间的距离"></a>AcWing 616.两点间的距离</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;iomanip&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double x1,y1,x2,y2;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;y1;</span><br><span class="line">    cin&gt;&gt;x2&gt;&gt;y2;</span><br><span class="line">    cout&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;sqrt((x1-x2)^2+(y1-y2)^2);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>报错a.cpp:10:22: error: invalid operands of types ‘float’ and ‘float’ to binary ‘operator^’<br>百度原因是因为cpp不支持平方操作<br>修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));</span><br></pre></td></tr></table></figure>
+
+<h1 id="AcWing-617-距离"><a href="#AcWing-617-距离" class="headerlink" title="AcWing 617. 距离"></a>AcWing 617. 距离</h1><p>题目：两辆汽车在同一地点，同时，沿同一方向前进。<br>一辆车的速度为 60 km/h，另一辆车的速度为 90 km/h。<br>显然，快车与慢车的距离会不断拉开，每过一个小时（60 分钟），两车的距离就拉开 30 公里。<br>现在，告诉你两车之间的距离为 L 公里，请你求出两车已经行驶了多长时间？<br>错误代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;L/(90-60)*60&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>错误原因：没有考虑到/是整除，L可能不是30的整数倍，此时应该如何解决问题呢？<br>修改：快车与慢车每小时拉开30KM，每分钟拉开0.5KM<br>直接把单位换算到分钟，不用小时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;L/0.5&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仍然错误；此时可以看到除了0.5,变成浮点数了，数字太大的话会变成科学技术法，与标准输出不同，我们强制转换为int;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;(int)(L/0.5)&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>成功</p>
+<h1 id="AcWing-656-钞票和硬币"><a href="#AcWing-656-钞票和硬币" class="headerlink" title="AcWing 656. 钞票和硬币"></a>AcWing 656. 钞票和硬币</h1><p>错误在于，对小数进行区域操作是不可行的;<br>我们把小数部分扩大数量级至整数部分就能正确地使用取余操作了;<br>但是此处出现了问题<br>源代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double number;</span><br><span class="line">    cin&gt;&gt;number;</span><br><span class="line">    int a,b,c,d,e,f,g,h,i,j,k,l;</span><br><span class="line">    a=number/100;</span><br><span class="line">    b=(number-a*100)/50;</span><br><span class="line">    c=(number-a*100-b*50)/20;</span><br><span class="line">    d=(number-a*100-b*50-c*20)/10;</span><br><span class="line">    e=(number-a*100-b*50-c*20-d*10)/5;</span><br><span class="line">    f=(number-a*100-b*50-c*20-d*10-e*5)/2;</span><br><span class="line">    cout&lt;&lt;&quot;NOTAS:&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;&quot; nota(s) de R$ 100.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;b&lt;&lt;&quot; nota(s) de R$ 50.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;c&lt;&lt;&quot; nota(s) de R$ 20.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;d&lt;&lt;&quot; nota(s) de R$ 10.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;e&lt;&lt;&quot; nota(s) de R$ 5.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;f&lt;&lt;&quot; nota(s) de R$ 2.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;&quot;MOEDAS:&quot;&lt;&lt;endl;</span><br><span class="line">    g=(number-a*100-b*50-c*20-d*10-e*5-f*2)/1;</span><br><span class="line">    h=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1)*100/50;</span><br><span class="line">    i=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5)*100/25;</span><br><span class="line">    j=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25)*100/10;</span><br><span class="line">    k=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1)*100/5;</span><br><span class="line">    l=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1;</span><br><span class="line">    cout&lt;&lt;g&lt;&lt;&quot; moeda(s) de R$ 1.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;h&lt;&lt;&quot; moeda(s) de R$ 0.50&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;i&lt;&lt;&quot; moeda(s) de R$ 0.25&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;j&lt;&lt;&quot; moeda(s) de R$ 0.10&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;k&lt;&lt;&quot; moeda(s) de R$ 0.05&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;l&lt;&lt;&quot; moeda(s) de R$ 0.01&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">463.01</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">4 nota(s) de R$ 100.00</span><br><span class="line">1 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">1 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">1 moeda(s) de R$ 1.00</span><br><span class="line">0 moeda(s) de R$ 0.50</span><br><span class="line">0 moeda(s) de R$ 0.25</span><br><span class="line">0 moeda(s) de R$ 0.10</span><br><span class="line">0 moeda(s) de R$ 0.05</span><br><span class="line">0 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
+<p>标准答案：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">4 nota(s) de R$ 100.00</span><br><span class="line">1 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">1 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">1 moeda(s) de R$ 1.00</span><br><span class="line">0 moeda(s) de R$ 0.50</span><br><span class="line">0 moeda(s) de R$ 0.25</span><br><span class="line">0 moeda(s) de R$ 0.10</span><br><span class="line">0 moeda(s) de R$ 0.05</span><br><span class="line">1 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
+<p>很明显最后一行的值没对上，l的值是有问题的，为啥捏？？<br>单独输出一行</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1;</span><br></pre></td></tr></table></figure>
+<p>结果是</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
+<p><strong>我直接黑人问号????what’s your problem ??</strong><br>想了想，l是int型变量，而(number-a<em>100-b</em>50-c<em>20-d</em>10-e<em>5-f</em>2-g<em>1-h</em>0.5-i<em>0.25-j</em>0.1-k*0.05)*100/1应该是float型；<br>强制转换一下输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;(int)((number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1);</span><br></pre></td></tr></table></figure>
+<p>结果为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
+<p>好家伙，问题果然出在这儿；<br>float的1转换为int居然变成0了？为啥啊？？应该是储存的问题，原谅我不考计组==<br>那么精度丢失只影响最后一位。我们不定义l;直接输出l试试：<br>测试成功<br>这会儿倒是没问题了，但是又有新的问题出现了==<br>样例输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2214.9</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">22 nota(s) de R$ 100.00</span><br><span class="line">0 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">2 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">0 moeda(s) de R$ 1.00</span><br><span class="line">1 moeda(s) de R$ 0.50</span><br><span class="line">1 moeda(s) de R$ 0.25</span><br><span class="line">1 moeda(s) de R$ 0.10</span><br><span class="line">1 moeda(s) de R$ 0.05</span><br><span class="line">9.09411e-12 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
+<p>最后一行直接芜湖起飞好吧==一看就是精度的问题<br>人麻了==我直接大换血，整数部分不变，小数部分开刀</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double number;</span><br><span class="line">    cin&gt;&gt;number;</span><br><span class="line">    int a,b,c,d,e,f,g,h,i,j,k,l;</span><br><span class="line">    a=number/100;</span><br><span class="line">    b=(number-a*100)/50;</span><br><span class="line">    c=(number-a*100-b*50)/20;</span><br><span class="line">    d=(number-a*100-b*50-c*20)/10;</span><br><span class="line">    e=(number-a*100-b*50-c*20-d*10)/5;</span><br><span class="line">    f=(number-a*100-b*50-c*20-d*10-e*5)/2;</span><br><span class="line">    cout&lt;&lt;&quot;NOTAS:&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;&quot; nota(s) de R$ 100.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;b&lt;&lt;&quot; nota(s) de R$ 50.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;c&lt;&lt;&quot; nota(s) de R$ 20.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;d&lt;&lt;&quot; nota(s) de R$ 10.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;e&lt;&lt;&quot; nota(s) de R$ 5.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;f&lt;&lt;&quot; nota(s) de R$ 2.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;&quot;MOEDAS:&quot;&lt;&lt;endl;</span><br><span class="line">    g=(number-a*100-b*50-c*20-d*10-e*5-f*2)/1;</span><br><span class="line">    h=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100)/50;</span><br><span class="line">    i=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50)/25;</span><br><span class="line">    j=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25)/10;</span><br><span class="line">    k=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25-j*10)/5;</span><br><span class="line">    l=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25-j*10-k*5)/1;</span><br><span class="line">    cout&lt;&lt;g&lt;&lt;&quot; moeda(s) de R$ 1.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;h&lt;&lt;&quot; moeda(s) de R$ 0.50&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;i&lt;&lt;&quot; moeda(s) de R$ 0.25&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;j&lt;&lt;&quot; moeda(s) de R$ 0.10&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;k&lt;&lt;&quot; moeda(s) de R$ 0.05&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;l&lt;&lt;&quot; moeda(s) de R$ 0.01&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试成功，<em><strong>血的教训！！不要TM玩小数，能用整数的地方坚决避免出现小数！！</strong></em></p>
+<h1 id="AcWing-725-完全数"><a href="#AcWing-725-完全数" class="headerlink" title="AcWing 725. 完全数"></a>AcWing 725. 完全数</h1><p>源代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int n,sum=0;</span><br><span class="line">    long long a;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a;</span><br><span class="line">        for(long long j=1;j&lt;a;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(a%j==0)</span><br><span class="line">                sum+=j;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum==a)</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        sum=0;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试输入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">6</span><br><span class="line">5</span><br><span class="line">28</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6 is perfect</span><br><span class="line">5 is not perfect</span><br><span class="line">28 is perfect</span><br></pre></td></tr></table></figure>
+<p>没毛病，提交后显示Time Limit Exceeded ，超时了，第一次遇到，估计是两层嵌套时间复杂度太高了<br>看看讲解<br>如果d能整除x，即d%x==0;则d/x也能整除x，即d%(d/x)==0;<br>例如12%2==0;12%(12/2)==12%6==0;<br>所以<br>约数从小往大取，3是12的一个约数，12/3==4是另一个约数<br>假设i是一个约数，则n/i&gt;=i<br>即i²&lt;=n<br>即i&lt;=sqrt(n)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a,n,sum=0;</span><br><span class="line">    </span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a;</span><br><span class="line">        if(a==1)</span><br><span class="line">            cout&lt;&lt;&quot;1 is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else </span><br><span class="line">        &#123;</span><br><span class="line">        for(int j=1;j*j&lt;=a;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(a%j==0)</span><br><span class="line">                sum=j+(a/j)+sum;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum==a*2)</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        sum=0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面是正确代码，说一下需要注意的点<br>本题的思想是：找到一个约数就等于找到了两个约数，这样可以减小时间复杂度<br>比如看28是不是完全数，找约数：<br>1,28<br>2,14<br>4,7<br>找三次就能找到所有约数，再加起来，注意这里把所有的约数加上的话把本身28也加上去了，所以最后要除2</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+        <tag>错题</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AcWing语法基础课笔记</title>
     <url>/2022/01/27/AcWing%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="1、编译环境"><a href="#1、编译环境" class="headerlink" title="1、编译环境"></a><strong>1、编译环境</strong></h1><p>采用线上编译，地址：<br><a href="https://www.acwing.com/file_system/file/content/whole/index/content/172575/">https://www.acwing.com/file_system/file/content/whole/index/content/172575/</a></p>
@@ -173,92 +243,28 @@
       </tags>
   </entry>
   <entry>
-    <title>AcWing语法基础课错题记录</title>
-    <url>/2022/01/27/AcWing%E8%AF%AD%E6%B3%95%E5%9F%BA%E7%A1%80%E8%AF%BE%E9%94%99%E9%A2%98%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<h1 id="AcWing-604-圆的面积"><a href="#AcWing-604-圆的面积" class="headerlink" title="AcWing 604. 圆的面积"></a>AcWing 604. 圆的面积</h1><p>错误代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    float PI=3.14159;</span><br><span class="line">    float R;</span><br><span class="line">    cin&gt;&gt;R;</span><br><span class="line">    cout&lt;&lt;&quot;A=&quot;&lt;&lt; PI*R*R&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试输入 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10.16</span><br></pre></td></tr></table></figure>
-<p>测试输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A=324.293</span><br></pre></td></tr></table></figure>
-<p>标准答案</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">A=324.2925</span><br></pre></td></tr></table></figure>
-<p>分析原因：题目说了要保留四位小数，不用printf的话，用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fixed&lt;&lt;setprecisions(4)&lt;&lt;PI*R*R</span><br></pre></td></tr></table></figure>
-<p>试试，记得加头文件<iomanip><br>答案仍错，把float换为double试试<br>测试成功,下面为正确代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;iomanip&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double PI=3.14159;</span><br><span class="line">    double R;</span><br><span class="line">    cin&gt;&gt;R;</span><br><span class="line">    cout&lt;&lt;&quot;A=&quot;&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;PI*R*R&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="AcWing-616-两点间的距离"><a href="#AcWing-616-两点间的距离" class="headerlink" title="AcWing 616.两点间的距离"></a>AcWing 616.两点间的距离</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;iomanip&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    double x1,y1,x2,y2;</span><br><span class="line">    cin&gt;&gt;x1&gt;&gt;y1;</span><br><span class="line">    cin&gt;&gt;x2&gt;&gt;y2;</span><br><span class="line">    cout&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;sqrt((x1-x2)^2+(y1-y2)^2);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>报错a.cpp:10:22: error: invalid operands of types ‘float’ and ‘float’ to binary ‘operator^’<br>百度原因是因为cpp不支持平方操作<br>修改为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;fixed&lt;&lt;setprecision(4)&lt;&lt;sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));</span><br></pre></td></tr></table></figure>
-
-<h1 id="AcWing-617-距离"><a href="#AcWing-617-距离" class="headerlink" title="AcWing 617. 距离"></a>AcWing 617. 距离</h1><p>题目：两辆汽车在同一地点，同时，沿同一方向前进。<br>一辆车的速度为 60 km/h，另一辆车的速度为 90 km/h。<br>显然，快车与慢车的距离会不断拉开，每过一个小时（60 分钟），两车的距离就拉开 30 公里。<br>现在，告诉你两车之间的距离为 L 公里，请你求出两车已经行驶了多长时间？<br>错误代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;L/(90-60)*60&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>错误原因：没有考虑到/是整除，L可能不是30的整数倍，此时应该如何解决问题呢？<br>修改：快车与慢车每小时拉开30KM，每分钟拉开0.5KM<br>直接把单位换算到分钟，不用小时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;L/0.5&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>仍然错误；此时可以看到除了0.5,变成浮点数了，数字太大的话会变成科学技术法，与标准输出不同，我们强制转换为int;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    int L;</span><br><span class="line">    cin &gt;&gt; L;</span><br><span class="line">    cout&lt;&lt;(int)(L/0.5)&lt;&lt;&quot; minutos&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>成功</p>
-<h1 id="AcWing-656-钞票和硬币"><a href="#AcWing-656-钞票和硬币" class="headerlink" title="AcWing 656. 钞票和硬币"></a>AcWing 656. 钞票和硬币</h1><p>错误在于，对小数进行区域操作是不可行的;<br>我们把小数部分扩大数量级至整数部分就能正确地使用取余操作了;<br>但是此处出现了问题<br>源代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double number;</span><br><span class="line">    cin&gt;&gt;number;</span><br><span class="line">    int a,b,c,d,e,f,g,h,i,j,k,l;</span><br><span class="line">    a=number/100;</span><br><span class="line">    b=(number-a*100)/50;</span><br><span class="line">    c=(number-a*100-b*50)/20;</span><br><span class="line">    d=(number-a*100-b*50-c*20)/10;</span><br><span class="line">    e=(number-a*100-b*50-c*20-d*10)/5;</span><br><span class="line">    f=(number-a*100-b*50-c*20-d*10-e*5)/2;</span><br><span class="line">    cout&lt;&lt;&quot;NOTAS:&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;&quot; nota(s) de R$ 100.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;b&lt;&lt;&quot; nota(s) de R$ 50.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;c&lt;&lt;&quot; nota(s) de R$ 20.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;d&lt;&lt;&quot; nota(s) de R$ 10.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;e&lt;&lt;&quot; nota(s) de R$ 5.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;f&lt;&lt;&quot; nota(s) de R$ 2.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;&quot;MOEDAS:&quot;&lt;&lt;endl;</span><br><span class="line">    g=(number-a*100-b*50-c*20-d*10-e*5-f*2)/1;</span><br><span class="line">    h=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1)*100/50;</span><br><span class="line">    i=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5)*100/25;</span><br><span class="line">    j=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25)*100/10;</span><br><span class="line">    k=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1)*100/5;</span><br><span class="line">    l=(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1;</span><br><span class="line">    cout&lt;&lt;g&lt;&lt;&quot; moeda(s) de R$ 1.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;h&lt;&lt;&quot; moeda(s) de R$ 0.50&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;i&lt;&lt;&quot; moeda(s) de R$ 0.25&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;j&lt;&lt;&quot; moeda(s) de R$ 0.10&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;k&lt;&lt;&quot; moeda(s) de R$ 0.05&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;l&lt;&lt;&quot; moeda(s) de R$ 0.01&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">463.01</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">4 nota(s) de R$ 100.00</span><br><span class="line">1 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">1 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">1 moeda(s) de R$ 1.00</span><br><span class="line">0 moeda(s) de R$ 0.50</span><br><span class="line">0 moeda(s) de R$ 0.25</span><br><span class="line">0 moeda(s) de R$ 0.10</span><br><span class="line">0 moeda(s) de R$ 0.05</span><br><span class="line">0 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
-<p>标准答案：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">4 nota(s) de R$ 100.00</span><br><span class="line">1 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">1 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">1 moeda(s) de R$ 1.00</span><br><span class="line">0 moeda(s) de R$ 0.50</span><br><span class="line">0 moeda(s) de R$ 0.25</span><br><span class="line">0 moeda(s) de R$ 0.10</span><br><span class="line">0 moeda(s) de R$ 0.05</span><br><span class="line">1 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
-<p>很明显最后一行的值没对上，l的值是有问题的，为啥捏？？<br>单独输出一行</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;(number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1;</span><br></pre></td></tr></table></figure>
-<p>结果是</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1</span><br></pre></td></tr></table></figure>
-<p><strong>我直接黑人问号????what’s your problem ??</strong><br>想了想，l是int型变量，而(number-a<em>100-b</em>50-c<em>20-d</em>10-e<em>5-f</em>2-g<em>1-h</em>0.5-i<em>0.25-j</em>0.1-k*0.05)*100/1应该是float型；<br>强制转换一下输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cout&lt;&lt;(int)((number-a*100-b*50-c*20-d*10-e*5-f*2-g*1-h*0.5-i*0.25-j*0.1-k*0.05)*100/1);</span><br></pre></td></tr></table></figure>
-<p>结果为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-<p>好家伙，问题果然出在这儿；<br>float的1转换为int居然变成0了？为啥啊？？应该是储存的问题，原谅我不考计组==<br>那么精度丢失只影响最后一位。我们不定义l;直接输出l试试：<br>测试成功<br>这会儿倒是没问题了，但是又有新的问题出现了==<br>样例输入：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2214.9</span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">NOTAS:</span><br><span class="line">22 nota(s) de R$ 100.00</span><br><span class="line">0 nota(s) de R$ 50.00</span><br><span class="line">0 nota(s) de R$ 20.00</span><br><span class="line">1 nota(s) de R$ 10.00</span><br><span class="line">0 nota(s) de R$ 5.00</span><br><span class="line">2 nota(s) de R$ 2.00</span><br><span class="line">MOEDAS:</span><br><span class="line">0 moeda(s) de R$ 1.00</span><br><span class="line">1 moeda(s) de R$ 0.50</span><br><span class="line">1 moeda(s) de R$ 0.25</span><br><span class="line">1 moeda(s) de R$ 0.10</span><br><span class="line">1 moeda(s) de R$ 0.05</span><br><span class="line">9.09411e-12 moeda(s) de R$ 0.01</span><br></pre></td></tr></table></figure>
-<p>最后一行直接芜湖起飞好吧==一看就是精度的问题<br>人麻了==我直接大换血，整数部分不变，小数部分开刀</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">    double number;</span><br><span class="line">    cin&gt;&gt;number;</span><br><span class="line">    int a,b,c,d,e,f,g,h,i,j,k,l;</span><br><span class="line">    a=number/100;</span><br><span class="line">    b=(number-a*100)/50;</span><br><span class="line">    c=(number-a*100-b*50)/20;</span><br><span class="line">    d=(number-a*100-b*50-c*20)/10;</span><br><span class="line">    e=(number-a*100-b*50-c*20-d*10)/5;</span><br><span class="line">    f=(number-a*100-b*50-c*20-d*10-e*5)/2;</span><br><span class="line">    cout&lt;&lt;&quot;NOTAS:&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;a&lt;&lt;&quot; nota(s) de R$ 100.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;b&lt;&lt;&quot; nota(s) de R$ 50.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;c&lt;&lt;&quot; nota(s) de R$ 20.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;d&lt;&lt;&quot; nota(s) de R$ 10.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;e&lt;&lt;&quot; nota(s) de R$ 5.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;f&lt;&lt;&quot; nota(s) de R$ 2.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;&quot;MOEDAS:&quot;&lt;&lt;endl;</span><br><span class="line">    g=(number-a*100-b*50-c*20-d*10-e*5-f*2)/1;</span><br><span class="line">    h=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100)/50;</span><br><span class="line">    i=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50)/25;</span><br><span class="line">    j=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25)/10;</span><br><span class="line">    k=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25-j*10)/5;</span><br><span class="line">    l=(number*100-a*10000-b*5000-c*2000-d*1000-e*500-f*200-g*100-h*50-i*25-j*10-k*5)/1;</span><br><span class="line">    cout&lt;&lt;g&lt;&lt;&quot; moeda(s) de R$ 1.00&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;h&lt;&lt;&quot; moeda(s) de R$ 0.50&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;i&lt;&lt;&quot; moeda(s) de R$ 0.25&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;j&lt;&lt;&quot; moeda(s) de R$ 0.10&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;k&lt;&lt;&quot; moeda(s) de R$ 0.05&quot;&lt;&lt;endl;</span><br><span class="line">    cout&lt;&lt;l&lt;&lt;&quot; moeda(s) de R$ 0.01&quot;&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试成功，<em><strong>血的教训！！不要TM玩小数，能用整数的地方坚决避免出现小数！！</strong></em></p>
-<h1 id="AcWing-725-完全数"><a href="#AcWing-725-完全数" class="headerlink" title="AcWing 725. 完全数"></a>AcWing 725. 完全数</h1><p>源代码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int n,sum=0;</span><br><span class="line">    long long a;</span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a;</span><br><span class="line">        for(long long j=1;j&lt;a;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(a%j==0)</span><br><span class="line">                sum+=j;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum==a)</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        sum=0;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>测试输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">3</span><br><span class="line">6</span><br><span class="line">5</span><br><span class="line">28</span><br></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">6 is perfect</span><br><span class="line">5 is not perfect</span><br><span class="line">28 is perfect</span><br></pre></td></tr></table></figure>
-<p>没毛病，提交后显示Time Limit Exceeded ，超时了，第一次遇到，估计是两层嵌套时间复杂度太高了<br>看看讲解<br>如果d能整除x，即d%x==0;则d/x也能整除x，即d%(d/x)==0;<br>例如12%2==0;12%(12/2)==12%6==0;<br>所以<br>约数从小往大取，3是12的一个约数，12/3==4是另一个约数<br>假设i是一个约数，则n/i&gt;=i<br>即i²&lt;=n<br>即i&lt;=sqrt(n)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int a,n,sum=0;</span><br><span class="line">    </span><br><span class="line">    cin&gt;&gt;n;</span><br><span class="line">    for(int i=0;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cin&gt;&gt;a;</span><br><span class="line">        if(a==1)</span><br><span class="line">            cout&lt;&lt;&quot;1 is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else </span><br><span class="line">        &#123;</span><br><span class="line">        for(int j=1;j*j&lt;=a;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(a%j==0)</span><br><span class="line">                sum=j+(a/j)+sum;</span><br><span class="line">        &#125;</span><br><span class="line">        if(sum==a*2)</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is perfect&quot;&lt;&lt;endl;</span><br><span class="line">        else</span><br><span class="line">            cout&lt;&lt;a&lt;&lt;&quot; is not perfect&quot;&lt;&lt;endl;</span><br><span class="line">        sum=0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面是正确代码，说一下需要注意的点<br>本题的思想是：找到一个约数就等于找到了两个约数，这样可以减小时间复杂度<br>比如看28是不是完全数，找约数：<br>1,28<br>2,14<br>4,7<br>找三次就能找到所有约数，再加起来，注意这里把所有的约数加上的话把本身28也加上去了，所以最后要除2</p>
+    <title>Hexo,Next主题优化</title>
+    <url>/2022/01/26/Hexo-Next%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="设置hexo首页只显示部分摘要（不显示全文）"><a href="#设置hexo首页只显示部分摘要（不显示全文）" class="headerlink" title="设置hexo首页只显示部分摘要（不显示全文）"></a>设置hexo首页只显示部分摘要（不显示全文）</h1><blockquote>
+<p>摘自<a href="https://blog.csdn.net/yueyue200830/article/details/104470646?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164319697016780271536156%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164319697016780271536156&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-104470646.first_rank_v2_pc_rank_v29&amp;utm_term=hexo%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%96%B0%E6%96%87%E7%AB%A0&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/yueyue200830/article/details/104470646?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164319697016780271536156%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164319697016780271536156&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-104470646.first_rank_v2_pc_rank_v29&amp;utm_term=hexo%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%96%B0%E6%96%87%E7%AB%A0&amp;spm=1018.2226.3001.4187</a></p>
+</blockquote>
+<p>本文针对Next主题，不确保对于其它主题有效（但从修改模式来看，是有效的）<br>Next默认是会显示全文的，这样显然很不方便，因此需要一些方法去只显示前面一部分</p>
+<h1 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h1><p>首先需要在Next主题的_config.yml中把设置打开：(默认安装时就打开了)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically excerpt description in homepage as preamble text.</span><br><span class="line">excerpt_description: true</span><br></pre></td></tr></table></figure>
+<h1 id="Two-methods"><a href="#Two-methods" class="headerlink" title="Two methods"></a>Two methods</h1><h2 id="方法一：写概述"><a href="#方法一：写概述" class="headerlink" title="方法一：写概述"></a>方法一：写概述</h2><p>在文章的front-matter中添加description，其中description中的内容就会被显示在首页上，其余一律不显示。<br>exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: 让首页显示部分内容</span><br><span class="line">date: 2020-02-23 22:55:10</span><br><span class="line">description: 这是显示在首页的概述，正文内容均会被隐藏。</span><br></pre></td></tr></table></figure>
+<p>测试成功</p>
+<h2 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h2><p>在需要截断的地方加入</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
+<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。</p>
 ]]></content>
       <categories>
-        <category>算法</category>
+        <category>博客搭建</category>
       </categories>
       <tags>
-        <tag>算法</tag>
-        <tag>错题</tag>
+        <tag>Hexo</tag>
+        <tag>博客搭建</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2022/01/25/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>MarkDown语法</title>
@@ -355,183 +361,6 @@
       </categories>
       <tags>
         <tag>博客搭建</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于cannot get archives的问题</title>
-    <url>/2022/02/08/%E5%85%B3%E4%BA%8Ecannot%20get%20archives%E7%9A%84%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>今天碰到个问题，hexo的next主题，在点击头像下面的 日志 时无法正常跳转，反而显示<br>cannot get archives%7C%7C%20archive<br>在网上找了很久答案都不满意，最后终于找到解决方法了<br><strong>思路在下面，不想看的的到文末看结论就行了</strong></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先我们要知道 %7C是|的编码，%20是空格的编码<br>所以上面的报错实际上是<br>cannot get archives|| archive<br>其中archives|| archive有没有觉得很眼熟？<br>没错，我们在next的主题配置中有这样一段代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /|| home</span><br><span class="line">  about: /2022/01/26/关于本站点/|| user</span><br><span class="line">  tags: /tags/|| tags</span><br><span class="line">  categories: /categories/|| th</span><br><span class="line">  archives: /archives/|| archive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>所以这里就有了第一个解决方法<br>把最后一行改为archives: /archives/即删掉后面的部分，但是这种方法很明显有问题<br>因为|| archive是一种格式，后面表示的是图标，删掉的话你的博客里面的“归档”就没有图标了</p>
-<p>然后再想想<br>头像下面的日志不能再次打开，但是下面的分类和标签却可以正常打开，<br>这三个部分都属于 sidebar(侧边栏?)<br>所以我想问题出在sidebar的文件中<br>打开 \themes\next\layout_macro\sidebar.swig<br>因为我没学过这种语言，所以只能用对比的方法来找问题<br>我们找到有关 archive(日志) categorie(分类) tags(标签)的代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% if config.archive_dir != &#x27;/&#x27; and site.posts.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-posts&quot;&gt;</span><br><span class="line">  &#123;% if theme.menu.archives %&#125;</span><br><span class="line">    &lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br><span class="line">  &#123;% else %&#125;</span><br><span class="line">    &lt;a href=&quot;&#123;&#123; url_for(config.archive_dir) &#125;&#125;&quot;&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.posts&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"> </span><br><span class="line">&#123;% if site.categories.length &gt; 0 %&#125;</span><br><span class="line">  &#123;% set categoriesPageQuery = site.pages.find(&#123;type: &#x27;categories&#x27;&#125;, &#123;lean: true&#125;) %&#125;</span><br><span class="line">  &#123;% set hasCategoriesPage = categoriesPageQuery.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-categories&quot;&gt;</span><br><span class="line">    &#123;% if hasCategoriesPage %&#125;&lt;a href=&quot;&#123;&#123; url_for(categoriesPageQuery[0].path) &#125;&#125;&quot;&gt;&#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.categories.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.categories&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &#123;% if hasCategoriesPage %&#125;&lt;/a&gt;&#123;% endif %&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if site.tags.length &gt; 0 %&#125;</span><br><span class="line">  &#123;% set tagsPageQuery = site.pages.find(&#123;type: &#x27;tags&#x27;&#125;, &#123;lean: true&#125;) %&#125;</span><br><span class="line">  &#123;% set hasTagsPage = tagsPageQuery.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-tags&quot;&gt;</span><br><span class="line">    &#123;% if hasTagsPage %&#125;&lt;a href=&quot;&#123;&#123; url_for(tagsPageQuery[0].path) &#125;&#125;&quot;&gt;&#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.tags.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.tags&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &#123;% if hasTagsPage %&#125;&lt;/a&gt;&#123;% endif %&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
-<p>查了一下url_for是转码用的，可能和跳转有关，我们来看一下这三条语句</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(categoriesPageQuery[0].path) &#125;&#125;&quot;&gt;</span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tagsPageQuery[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>芜湖，一对比几乎可以确定问题出在这儿，第一行的代码格式与下两行明显不一样，其中的||正好对应%7C%7C<br>我们直接把第一行的格式修改的和下面两行差不多</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>再测试，成功！花了一晚上时间想这个好难啊QAQ</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>打开\themes\next\layout_macro\sidebar.swig<br>找到archive段中的</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>修改为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>即可</p>
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>博客搭建</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>复试要点</title>
-    <url>/2022/03/28/%E5%A4%8D%E8%AF%95%E8%A6%81%E7%82%B9/</url>
-    <content><![CDATA[<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>缴费;<br>编程测试(手写，拍照上传，不计分数，但是影响印象);<br>外语水平测试(翻译专业文献);<br>专业知识问答(874选两门);<br>准备个人PPT(老师会根据PPT问问题);</p>
-<p>PPT内容:科研经历没有的话写课设毕设内容<br>获奖和学术成果没有就删了</p>
-<h2 id="研究生阶段的科研计划或其他个人规划："><a href="#研究生阶段的科研计划或其他个人规划：" class="headerlink" title="研究生阶段的科研计划或其他个人规划："></a>研究生阶段的科研计划或其他个人规划：</h2><p>·复试结束后，继续学习编程课程，同时学习人工智能神经网络方面的知识。争取达到科班水平。提前进入老师实验室，提升专业知识技能。以饱满的激情投入到学习中去。<br>·研一阶段，扎实掌握专业基础，并寻找适合自己的科研方向。并判断自己是否适合科研道路，是否做好读博/出国的决定。<br>·研二阶段，在自己选择的方向上做出成果，着手论文书写工作。如果选择了工作道路，还需要做好实习准备。<br>·研三阶段，完美完成毕业工作。并规划好人生的道路，沿道路一直走下去。</p>
-<p>是否愿意调剂为非全日制：否</p>
-<h2 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h2><p>大多数跟数据结构相关，不难<br>往年题：<br>①约瑟夫问题：n个人围成一圈，从第一个人开始报数，第m个人退出，依次继续，直到最后一个人留下。<br>编写函数，求解约瑟夫问题，对指定的n,m，求最后留下的人的初始编号是多少。<strong>要求用单向链表模拟实现</strong><br>②检测字符串是否为IPV4<br>③大数相加<br>④旋转矩阵<br>⑤ZIGZAG<br>⑥统计文件中大小写字母、数字个数。</p>
-<h2 id="英语"><a href="#英语" class="headerlink" title="英语"></a>英语</h2><p>双绞线···找一本专业词汇还有python。要求朗读后翻译。(扇贝单词里面有)</p>
-<h2 id="专业课题目"><a href="#专业课题目" class="headerlink" title="专业课题目"></a>专业课题目</h2><p>874三门里面选两门，数据结构一定要选(比较简单)，概念题多。</p>
-<h2 id="PPT问答"><a href="#PPT问答" class="headerlink" title="PPT问答"></a>PPT问答</h2><p>1、PPT准备，最主要的是把PPT熟悉，保证写上去的东西都能说清楚，并且针对他们的问题能答上，毕业论文很重要。<br>2、专业知识：<br>①《深度学习入门》：基础，只有python基础语法，有一个简单项目，mnist手写书数字识字。适合0基础。<br>②吴恩达的机器学习课程，需要一定的基础知识。<br>③周志华的西瓜书和南瓜书，进阶，难。<br>人工智能可以看李宏毅的作业CSDN；</p>
-<h2 id="专业方向："><a href="#专业方向：" class="headerlink" title="专业方向："></a>专业方向：</h2><p>出成绩就发邮件，一个星期不回就换老师，可以参加实验室的面试；<br>几乎所有方向都有：数据库；计算机网络；网安；计算机图形学（游戏）；算法；OS；软件；</p>
-<p>张严辞：有图形学基础，搞游戏引擎开发的，要求很优秀的才行。<br>赵启军：论文产出好，想搞学术的去<br>吕建成：实验室项目多，资源多，略卷，老师好，时间少。<br>徐文政：很好，毕业要求学术发顶会<br>朱敏：要求严</p>
-]]></content>
-      <categories>
-        <category>考研</category>
-      </categories>
-      <tags>
-        <tag>考研</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo,Next主题优化</title>
-    <url>/2022/01/26/Hexo-Next%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="设置hexo首页只显示部分摘要（不显示全文）"><a href="#设置hexo首页只显示部分摘要（不显示全文）" class="headerlink" title="设置hexo首页只显示部分摘要（不显示全文）"></a>设置hexo首页只显示部分摘要（不显示全文）</h1><blockquote>
-<p>摘自<a href="https://blog.csdn.net/yueyue200830/article/details/104470646?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164319697016780271536156%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164319697016780271536156&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-104470646.first_rank_v2_pc_rank_v29&amp;utm_term=hexo%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%96%B0%E6%96%87%E7%AB%A0&amp;spm=1018.2226.3001.4187">https://blog.csdn.net/yueyue200830/article/details/104470646?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522164319697016780271536156%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=164319697016780271536156&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-104470646.first_rank_v2_pc_rank_v29&amp;utm_term=hexo%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E6%96%B0%E6%96%87%E7%AB%A0&amp;spm=1018.2226.3001.4187</a></p>
-</blockquote>
-<p>本文针对Next主题，不确保对于其它主题有效（但从修改模式来看，是有效的）<br>Next默认是会显示全文的，这样显然很不方便，因此需要一些方法去只显示前面一部分</p>
-<h1 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h1><p>首先需要在Next主题的_config.yml中把设置打开：(默认安装时就打开了)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Automatically excerpt description in homepage as preamble text.</span><br><span class="line">excerpt_description: true</span><br></pre></td></tr></table></figure>
-<h1 id="Two-methods"><a href="#Two-methods" class="headerlink" title="Two methods"></a>Two methods</h1><h2 id="方法一：写概述"><a href="#方法一：写概述" class="headerlink" title="方法一：写概述"></a>方法一：写概述</h2><p>在文章的front-matter中添加description，其中description中的内容就会被显示在首页上，其余一律不显示。<br>exp:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">title: 让首页显示部分内容</span><br><span class="line">date: 2020-02-23 22:55:10</span><br><span class="line">description: 这是显示在首页的概述，正文内容均会被隐藏。</span><br></pre></td></tr></table></figure>
-<p>测试成功</p>
-<h2 id="方法二：文章截断"><a href="#方法二：文章截断" class="headerlink" title="方法二：文章截断"></a>方法二：文章截断</h2><p>在需要截断的地方加入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
-<p>首页就会显示这条以上的所有内容，隐藏接下来的所有内容。</p>
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>博客搭建</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>操作系统信号量题目技巧</title>
-    <url>/2022/03/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%A2%98%E7%9B%AE%E6%8A%80%E5%B7%A7/</url>
-    <content><![CDATA[<h1 id="生产者消费者问题-吸烟者问题"><a href="#生产者消费者问题-吸烟者问题" class="headerlink" title="生产者消费者问题(吸烟者问题)"></a>生产者消费者问题(吸烟者问题)</h1><h2 id="同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系"><a href="#同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系" class="headerlink" title="同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系"></a>同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系</h2><p>full表示还有多少个产品可以消费<br>empty表示还有多少个空位可以重新生产（注意初值）</p>
-<p>生产者过程：<br>首先需要一个空位p(empty)<br>生产完后多了一个产品v(full)</p>
-<p>消费者过程：<br>首先需要一个产品p(full)<br>消费完后多了一个空位v(empty)</p>
-<h2 id="互斥：注意哪些东西不能同时访问-mutex-初值为1"><a href="#互斥：注意哪些东西不能同时访问-mutex-初值为1" class="headerlink" title="互斥：注意哪些东西不能同时访问 mutex 初值为1"></a>互斥：注意哪些东西不能同时访问 mutex 初值为1</h2><h1 id="读者写者问题"><a href="#读者写者问题" class="headerlink" title="读者写者问题"></a>读者写者问题</h1><p>读者写者问题主要是为了解决互斥问题。读和读之间可以同时访问；读和写、写和写之间是互斥的<br>引入计数器counter；表示读的人</p>
-<h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><p>mutex<br>写过程是不容其他过程的，可以直接P(mutex)<br>而读过程P(mutex)受计数器counter的影响；需要考虑是不是第一个读进程(负责P)；以及退出时是不是最后一个推出的(负责V)<br>rw，读写之间的互斥</p>
-<h1 id="哲学家问题"><a href="#哲学家问题" class="headerlink" title="哲学家问题"></a>哲学家问题</h1><p>哲学家问题的关键时限制并行，三种思路<br>1、限制申请条件(破坏死锁条件)<br>比如规定单号哲学家先取左边；双号(if i%2==0)哲学家先取右边筷子</p>
-<p>2、限制信号量并行数<br>如：限制同一时间只能有一个哲学家就餐(禁止并行)</p>
-<p>3、限制哲学家只有取得两只筷子时才能就餐(破坏死锁条件)</p>
-<h1 id="理发师问题-涉及取号叫号"><a href="#理发师问题-涉及取号叫号" class="headerlink" title="理发师问题(涉及取号叫号)"></a>理发师问题(涉及取号叫号)</h1><p>理发师、营业员都是这一类<br>同步：顾客的取号和工作人员的叫号通过同步信号量实现，顾客到达取号后就P操作排队，因为信号量机制中P会把自己阻塞并进入阻塞队列。先来的顾客就在前面<br>互斥：取号机只有一个；可以通过队列实现叫号</p>
-<h1 id="做题技巧"><a href="#做题技巧" class="headerlink" title="做题技巧"></a><strong>做题技巧</strong></h1><p>1.审题 找对应题型<br>2.找到临界资源 确定互斥信号量<br>3.找到进程之间的同步关系 确定同步信号量<br>4.写出代码 添加注释<br>5.回顾题目 看是否满足要求<br>6.外层写同步信号量；内层写互斥信号量(反了的话可能会出问题)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">P(empty)</span><br><span class="line">    P(mutex)</span><br><span class="line">        具体操作</span><br><span class="line">    V(mutex)</span><br><span class="line">V(full)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>考研</category>
-      </categories>
-      <tags>
-        <tag>考研</tag>
-        <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>每日一篇经济学人</title>
-    <url>/2022/04/01/%E6%AF%8F%E6%97%A5%E4%B8%80%E7%AF%87%E7%BB%8F%E6%B5%8E%E5%AD%A6%E4%BA%BA/</url>
-    <content><![CDATA[<h2 id="DAY-1-Genetic-tests-for-pets——Testing-dogs’-DNA-is-increasingly-popular-and-full-of-surprises"><a href="#DAY-1-Genetic-tests-for-pets——Testing-dogs’-DNA-is-increasingly-popular-and-full-of-surprises" class="headerlink" title="DAY 1:Genetic tests for pets——Testing dogs’ DNA is increasingly popular, and full of surprises."></a>DAY 1:Genetic tests for pets——Testing dogs’ DNA is increasingly popular, and full of surprises.</h2><p><a href="https://www.bilibili.com/video/BV1S94y1o7QV?spm_id_from=0.0.header_right.history_list.click">https://www.bilibili.com/video/BV1S94y1o7QV?spm_id_from=0.0.header_right.history_list.click</a></p>
-<p>Carnegie <font color= red>Violet</font> dog-fuller lives a happy life in Hollywood. She enjoys <font color= red>munching</font> ice cubes and listening to Snoop Dogg. Life was not always easy. Found as an injured <font color= red>stray</font> in Santa Monica, she spent time in a rescue centre before being adopted by Gregg and Linday last year.They reckoned she was a French Bulldog mix. But a DNA test revealed her to be more American Staffordshire Terrier (39%) than French Bulldog (24%), with significant Pomeranian genes (16%). “We were shocked,” admits Mr Fuller.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Violet n.紫罗兰，此处应该是名字</span><br><span class="line">munch (on/at) sth vt/vi.咀嚼某物</span><br><span class="line">stray vi.走失 adj.走失的 n.走失的宠物/家畜</span><br></pre></td></tr></table></figure>
-
-<p>Genealogy was once the <font color= red>preserve</font> of elite dogs. Their breeders take a special interest in keeping bloodlines pure, to create new champions and to raise the prices of <font color= red>puppies</font>. Now common <font color= red>mutts</font> are having their <font color= red>pedigrees</font> traced. Wisdom Panel, a firm that tests pet DNA, said on March 3rd that its database had expanded to 3m animals (<font color= blue>over 95% of them dogs</font>), up from 1m in 2018. Embark Veterinary, a similar firm which has 1m dogs in its database, was valued at $700m in July after a $75 investment.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preserve n.私人领域、专属领域</span><br><span class="line">puppy n.小狗，幼犬</span><br><span class="line">mutt n.狗，杂交狗</span><br><span class="line">pedigree n.动物血统记录 a.纯种的，血统优良的</span><br><span class="line">over 95% of them dogs 其中超过95%是狗</span><br></pre></td></tr></table></figure>
-
-<p>During the pandemic 23m Americans adopted puppies, according to the American <font color= red>Society</font> for the Prevention of <font color= red>Cruelty</font> to Animals. Rebecca Chodroff Foran, <font color= red>research director</font> at Wistom Panel, thinks this trend has <font color= red>collided</font> with another: the growth of human-DNA bussiness. Owners “now consider their pets to be key numbers of the family”, she says.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">society n.协会</span><br><span class="line">cruelty n.残忍，虐待，残暴的行为</span><br><span class="line">research director 研究总监</span><br><span class="line">collide with 与···相撞</span><br></pre></td></tr></table></figure>
-
-<p>Animal DNA tests work much like human ones. They compare genetic markers with a database of pets with verified pedigrees, revealing <font color= red>canine</font> lineage and potional health problems. Embark claims 99.9% accuracy; Wisdom Panel claims over 98%.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">canine a.狗的</span><br></pre></td></tr></table></figure>
-
-<p>Some owners are horrified to discover that their costly <font color= red>crossbreed</font> is in fact a mix of entirely different breeds. But owners of adopted and <font color= red>rescue dogs</font>, which make up 67% of Wisdom Panel’s database, are keen to learn. Murrary, who lives in New York with his owner Erica Hyman, looks like a Jack Russell but with his uprigtht years. He turned out to be a mix of 23 breeds. “Now I just tell people ‘He’s just a dog’”, says Ms Hyman.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crossbreed n.杂交品种</span><br><span class="line">rescue dog 搜救犬</span><br></pre></td></tr></table></figure>
-
-<p>Chico Lopez, who breeds American Pit Bull Terriers, thinks DNA is a <font color= red>decent</font> investment for mutts. He compares them to second-hand cars: “You don’t know if the engine comes from a Toyota, the transmission from a Bugatti and the tyres from a little motorcycle, so you need to…find out what is going to break first.” But those wanting to pureblood, he says, should not rely on DNA, as <font color= red>reputable</font> breeders already have accurate knowlegde of a dog’s ancestor.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">decent a.恰好的 </span><br><span class="line">decent investment 不错的投资</span><br><span class="line">reputable a.值得尊敬的，声誉良好的</span><br></pre></td></tr></table></figure>
-
-<p>Owners of adopted dogs like searching for long-lost kin. About 12% of dogs on Embark’s database discover a <font color= red>sibling</font>, parent or offspring. And, as with human DNA testing, there is the possibility of <font color=blue>stumbling on a family secret</font>. Some dog owners are now finding that their sweet pooch fathered a little in another state before absconding. <font color= red>Paw form</font>.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sibling n.兄弟姐妹</span><br><span class="line">stumbling on a family secret 撞破一个家庭秘密</span><br><span class="line">Paw form 四处留情</span><br></pre></td></tr></table></figure>
-
-<h2 id="DAY-2-Bartleby-Body-of-research——Online-work-has-changed-the-nature-of-non-verb-com-munication"><a href="#DAY-2-Bartleby-Body-of-research——Online-work-has-changed-the-nature-of-non-verb-com-munication" class="headerlink" title="DAY 2:Bartleby:Body of research——Online work has changed the nature of non-verb com-munication"></a>DAY 2:Bartleby:Body of research——Online work has changed the nature of non-verb com-munication</h2><p><a href="https://www.bilibili.com/video/BV1P34y1t7RX?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1P34y1t7RX?spm_id_from=333.337.search-card.all.click</a></p>
-<p>Communication is an essential part of leadership. And body language is an essential part of communication. <font color= blue>On those slim pillars rests a mini-industry of research and advice into how executives can influence, encourage and <font color= red>ascend</font> without needing to say a word</font>. The pandemic has made much of it <font color= red>redundant</font>.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ascend v.上升</span><br><span class="line">redundant a.冗余的</span><br><span class="line">一种关于研究和建议高管如何不需要说一句话就能够影响、鼓励、晋升的微型产业建立在了这些细小的支柱上</span><br></pre></td></tr></table></figure>
-
-<p>Plenty of studies have looked into the non-verbal behaviour that <font color= red>makes out”emergent leaders”</font>, people who do not have a <font color= red>specified</font> role in the <font color= red>hierarchy</font> but naturally assume a position of authority in groups. They are a bag of <font color= red>tics</font>. They nod; they touch others but not themselves; they gesture; they <font color= red>furrow</font> their brows; they hold themselves erect; their facial expressions are more <font color= red>animated</font>.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make out 造就</span><br><span class="line">emergent a.紧急的/自发的 这里可以理解为天生的领袖？</span><br><span class="line">specify vt.指定 </span><br><span class="line">hierarchy  [ˈhaɪərɑːki]  n. 阶级</span><br><span class="line">tic n.抽搐 a bag of tics 充满了动作</span><br><span class="line">furrow n.犁沟;沟;车辙;(脸上的)皱纹</span><br><span class="line">       v.犁;(使)皱(眉)，蹙(额)</span><br><span class="line">brow n.额头</span><br><span class="line">erect a.垂直的 vt.建造  </span><br><span class="line">animate vt.使有生气，使生气勃勃</span><br><span class="line">animated a.有生气的</span><br></pre></td></tr></table></figure>
-
-<p>Other research suggests that, to win votes in an election, candidates should deliver speeches with their feet <font color= red>planted</font> apart. The seconed-most popular TED talk claims that <font color= blue>two minutes of private</font>, <font color= red>hands-on-hips</font> “power posing” can <font color= red>infuse</font> a job candidate with confidence and improve others’ perception of them.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plant vt.树立，安放</span><br><span class="line">two minutes of private 私下两分钟</span><br><span class="line">hip n.臀部，髋骨 </span><br><span class="line">hands-on-hip 双手叉腰</span><br><span class="line">infuse vt.使具有(流入)</span><br></pre></td></tr></table></figure>
-
-<p>Gazing can foster a sense of psychological safety as well as <font color= red>confer</font> authority: in a recent paper, a <font color= red>trio</font> of research from Havard Bussiness School found that receiving more eye contact from a <font color= red>bigwig</font> led to greater participation in group interactions. Leaders who adopt <font color= red>open</font> body positions, with arms and legs uncrossed, are also more likely to encourage contribution.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">confer=bestow vt.授予</span><br><span class="line">trio n.三人小组</span><br><span class="line">bigwig n.大人物</span><br><span class="line">open a.开放的</span><br></pre></td></tr></table></figure>
-
-<p>There are three problems with this body of research on non-verbal communication. One is that so much of it is <font color= red>blindingly</font> obvious. Nodding at someone rather than shaking head in incredulity when they are speaking to you——this dose indeed send a powerful signal. But so does punching someone in the face, <font color= blue>and no one thinks that requires a journal publication.</font></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blind a.瞎的</span><br><span class="line">blinding a.刺眼的，炫目的</span><br><span class="line">blindingly ad.极其地=extremely=especially</span><br><span class="line">credulity n.轻信</span><br><span class="line">incredulity n.怀疑，不信</span><br><span class="line">journal n.报刊，杂志</span><br><span class="line">没人需要阅读期刊论文才明白这个道理</span><br></pre></td></tr></table></figure>
-
-<p>A second problem is that people look for different things from their bosses. <font color= red>Frowning</font> is seen as a mark of emergent leaders but not of suppositive ones; <font color= blue>the reverse is true of smiling</font>. (The effect of similing with <font color= red>lowered eyebrows</font> <font color= pink>cries out</font> for study.) A recent paper found that male <font color= red>recipients</font> regarded bosses who used emojis, a form of non-quite-verbal communication, in an email as more effective, but that female recipients perceived them as less effective. </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">frown vi.皱眉头</span><br><span class="line">be true of 适用于；符合于</span><br><span class="line">关于微笑（的观点）正好相反</span><br><span class="line">lowered eyebrow 与 raised eyebrowed 相对应. raise eyebrow 表示不赞成 那么lower eyebrow 呢？</span><br><span class="line">cry out for 迫切需要</span><br><span class="line">整句：关于垂眉微笑的影响更需要研究</span><br><span class="line">recipient n.收件人</span><br></pre></td></tr></table></figure>
-
-<p>The third problem is newer. Almost all of the research on body language dates from a time of <font color= red>in-person</font> interactions. Even when the pandemic <font color= red>wanes</font> and offices in the West refill, most buildings will not return to full capacity. Employees will keep working remotely for at least part of the week; <font color= red>Zoom</font> will remain <font color= red>integral</font> to white-collar working lives. And if there is one thing for which online interactions are not suited, it is body language.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">in-person ad.亲自 a.亲自的</span><br><span class="line">wane=fade=decrease [weɪn] vi.衰落、减弱</span><br><span class="line">refill vt.再装满</span><br><span class="line">Zoom 视频会议软件</span><br><span class="line">integral a.完整的→不可或缺的</span><br></pre></td></tr></table></figure>
-
-<p>That is partly because bodies themselves are largely hidden from view: whatever language they are speaking, it is hard to hear them. You will know the partners, pets and <font color= red>home-decor</font> choices of new colleagues before you will know how tall they are. And although faces fill the video-conferencing screen, meaningfull eye contact is impossible.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">decor n.装饰风格</span><br></pre></td></tr></table></figure>
-
-<p>Once past a basic <font color= red>threshold</font> of <font color= red>attentiveness</font>——not looking down at your mobile phone, <font color= red>say</font>——most people have the same glassy-eyed <font color= red>stare</font>. If several faces appear on screen, these participants have no way of knowing that you are gazing specifically at them. (Angway, adimit it: the face you are looking at with most interest is your own.) If your camera is in the wrong place, you may think you are looking meaningfully at your team but you are actually just giving them a view of your <font color= red>nostrills</font>. Animated expressions are hard to <font color= red>spot</font>, particularly when people attending hybrid meetings in the office are <font color= blue>Lowry-like</font> figures seated metres away.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">threshold n.阈值</span><br><span class="line">attentiveness n.专心</span><br><span class="line">say v 假设</span><br><span class="line">not looking down at your mobile phone, say这一整句才是完整的插入语部分</span><br><span class="line">glassy a.(眼睛)无神的 呆滞的</span><br><span class="line">stare n.盯</span><br><span class="line">nostrill n.鼻孔</span><br><span class="line">spot v发现注意到=observe=notice</span><br><span class="line">Lowry-like 像Lowry画的火柴人一样</span><br></pre></td></tr></table></figure>
-
-<p>There are no good ways to compensate for these problems. One tactic is to go <font color= red>all in</font> on expressiveness, nodding <font color= red>furiously</font> and gesturing dementedly—— a small <font color= red>tile</font> of caged energy somewhere in the bottom left-hand corner of the screen. Another is to do a “Zoom loom”, placing yourself so close to the camera that you will give everyone nightmares.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">all-in a.不遗余力的 </span><br><span class="line">furiously ad.激烈地 猛烈地</span><br><span class="line">dementedly ad.焦躁地</span><br><span class="line">tile n.瓷砖 这里比喻了屏幕上面的头像框</span><br><span class="line">loom n.逼近 突然出现</span><br><span class="line">Zoom loom Zoom特写</span><br></pre></td></tr></table></figure>
-
-<p>The simpler option is not to think too hard about body language. At a few specific moments, like job interviews and <font color= red>set-piece</font> speeches, first impressions matter and a bit of <font color= red>self-conscious</font> posing <font color= red>pays off</font>. But posture is not leadership. If you want to give people a break from staring at a screen, turning off your camera is a good way to do it. If you want to <font color= red>waggle</font> your eyebrows, up or down, let them loose. And if you need to be told that looking at someone makes them feel valued, you have big issues. </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set-piece a.事先精心安排的</span><br><span class="line">self-conscious = intentional a.故意的、刻意的</span><br><span class="line">pay off</span><br><span class="line">waggle vt.来回摆动</span><br></pre></td></tr></table></figure>
-
-<h2 id="DAY-3-The-Theranos-trial-Blood-will-have-blood——A-jury-finds-a-former-Silicon-Valley-star-guilty-of-fraud"><a href="#DAY-3-The-Theranos-trial-Blood-will-have-blood——A-jury-finds-a-former-Silicon-Valley-star-guilty-of-fraud" class="headerlink" title="DAY 3: The Theranos trial: Blood will have blood——A jury finds a former Silicon Valley star guilty of fraud."></a>DAY 3: The Theranos trial: Blood will have blood——A jury finds a former Silicon Valley star guilty of fraud.</h2><p><a href="https://www.bilibili.com/video/BV1ti4y1Q7BL?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1ti4y1Q7BL?spm_id_from=333.999.0.0</a></p>
-<p>On JANUARY 3RD, after seven days of <font color= red>delibration</font>, a 12-member jury in Silicon Valley found Elizabeth Homlmes, the entrepreneur behind a blood-testing <font color= red>startup</font>, guilty of four <font color= red>counts</font> of <font color= red>fraudulently</font> deceiving investors. Each count carries a <font color= red>prison term</font> of up to 20 years; <font color= blue>no date has been set for her sentencing</font>.She was <font color= red>acquitted</font> of four charges of deceiving patients and doctors; on three others the jury were <font color= red>deadlocked</font>. The <font color= red>verdict</font>, against which Ms Holmes’s lawyers are expected to <font color= red>appeal</font>, marks the collapse of a career that <font color= red>beguiled</font> the media, politicians and investors.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">delibration n.讨论，审议</span><br><span class="line">startup n.新型小型企业</span><br><span class="line">guilty of ``` 有···罪</span><br><span class="line">count n.罪状</span><br><span class="line">fraudulent a.欺骗的，欺诈的</span><br><span class="line">prison term 刑期</span><br><span class="line">set a date for 选定···日期 sentence v.宣判</span><br><span class="line">acquit sb of sth v.宣告无罪(罪名不成立)</span><br><span class="line">deadlock n.僵持不下(死锁) deadlocked a.僵持不下的</span><br><span class="line">verdict n.裁定</span><br><span class="line">appeal v.上诉</span><br><span class="line">beguile vt.欺骗</span><br></pre></td></tr></table></figure>
-
-<p>After dropping out of Stanford University in 2003 at the age of 19, Ms Holmes founded Theranos to develop a <font color= red>radical advance</font> in blood-testing technology that she hoped would allow hundreds of tests to be performed using a single tiny drop of blood rather than a full vial. The tantalising vision promised to make health care more effective and efficient.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">radical a.彻底的</span><br><span class="line">advance n.进步</span><br><span class="line">a drop of 一滴</span><br><span class="line">vial n.小瓶</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>Unfortunately, Ms Holmes could not bring it to fruition. In voting to concict on four counts, the jury concluded that, aware of her company’s failure, Ms Holmes intentionally lied about its prospects and capabilities, and so crossed the fine line from promotion to deliberate fraud——a step she explicity denied in her own testimony.</p>
-<p>In many ways Theranos differed little from many hot startups. It raised more than $1bn, reached an extravagant theoretical valuation (in its case $9bn) before crashing without ever going public and disintegrating into a vast graveyard of unfeasible ideas. Typically, executives behind such ventures are quickly forgotten. But Ms Holmes’s path differed at least in part because even though her company’s products failed, her presence about broader story proved unusually compelling.</p>
-<p>In building Theranos, Ms Holmes assembled a remarkable collection of acolytes. Her board was filled with several former secretaries of state and defence. Joe Bidden, while vice-prisident, called Theranos “the laboratory of future” and Ms Holmes “an inspiration”. The company’s shocking failure suggested her famous followers had fed merely on type. The fashion press was besotted by Ms Holmes’s ability to present herself. The steve Jobs-inspired black turtlenecks she wore at work were seen as reflecting authority. The opennecked shirts and blouses she donned during the trial were a sign of appealing vulnerability, augmented by the nappy bag she carried to court, which signalled to jury the costs of a potential prison term to a young mother and her infant child (who was born in July). Reporters and other onlookers waited for hours to nab a set in the packed courtroom.</p>
-<p>Ms Holmes’s defence followed two distinct lines. The most obvious hinged on naivety. She may have been wrong about Theranos’s prospecets, the argument went, but that is not a crime. Startup investors are supposed to be a sophisticated lot, willing to wager based on deep insights in the hope of a big return, while understanding that long shots can fail. The prosecutors’ counterargument rested primarily on the presentations which Ms Holmes made to investors. These appeared to exaggerate potential sales and trumpet non-existent endorsements from the armed forces and big pharmaceutical companies. The single substantive request made by the jurors during their delibretion was to rehear a presentation that had been recorded, suggesting they were parsing what precisely she had been telling her backers.</p>
-<p>Ms Holmes’ sound line of argument, the so-called Svengali defence, was particularly appealing to hot Hollywood, but its impact on the jury was unclear. She claimed at the trial to have been sexually and emotionally abused and manuplated by Ramesh “Sunny” Balwani, her ex-partner and Theranos’s former chief operating officer. As such, her lawyers posited, she could not be held responsible for her actions.</p>
-<p>Mr Balwani has strongly denied all allegations. His own trial for fraud charges will begin next month, ensuring the Theranos saga will not end soon. And even after the last gavel is pounded, there will be more to come. In the lead-up to the verdict Hulu, a capable network, released photos from an upcoming mini-series on Ms Holmes’s story, starring Amanda Seyfried. Ms Holmes may end up going to prison, but she will not be going away.</p>
-]]></content>
-      <categories>
-        <category>English</category>
-      </categories>
-      <tags>
-        <tag>考研</tag>
-        <tag>English</tag>
       </tags>
   </entry>
   <entry>
@@ -1373,6 +1202,206 @@ while(1)
       </tags>
   </entry>
   <entry>
+    <title>关于cannot get archives的问题</title>
+    <url>/2022/02/08/%E5%85%B3%E4%BA%8Ecannot%20get%20archives%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>今天碰到个问题，hexo的next主题，在点击头像下面的 日志 时无法正常跳转，反而显示<br>cannot get archives%7C%7C%20archive<br>在网上找了很久答案都不满意，最后终于找到解决方法了<br><strong>思路在下面，不想看的的到文末看结论就行了</strong></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先我们要知道 %7C是|的编码，%20是空格的编码<br>所以上面的报错实际上是<br>cannot get archives|| archive<br>其中archives|| archive有没有觉得很眼熟？<br>没错，我们在next的主题配置中有这样一段代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /|| home</span><br><span class="line">  about: /2022/01/26/关于本站点/|| user</span><br><span class="line">  tags: /tags/|| tags</span><br><span class="line">  categories: /categories/|| th</span><br><span class="line">  archives: /archives/|| archive</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>所以这里就有了第一个解决方法<br>把最后一行改为archives: /archives/即删掉后面的部分，但是这种方法很明显有问题<br>因为|| archive是一种格式，后面表示的是图标，删掉的话你的博客里面的“归档”就没有图标了</p>
+<p>然后再想想<br>头像下面的日志不能再次打开，但是下面的分类和标签却可以正常打开，<br>这三个部分都属于 sidebar(侧边栏?)<br>所以我想问题出在sidebar的文件中<br>打开 \themes\next\layout_macro\sidebar.swig<br>因为我没学过这种语言，所以只能用对比的方法来找问题<br>我们找到有关 archive(日志) categorie(分类) tags(标签)的代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% if config.archive_dir != &#x27;/&#x27; and site.posts.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-posts&quot;&gt;</span><br><span class="line">  &#123;% if theme.menu.archives %&#125;</span><br><span class="line">    &lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br><span class="line">  &#123;% else %&#125;</span><br><span class="line">    &lt;a href=&quot;&#123;&#123; url_for(config.archive_dir) &#125;&#125;&quot;&gt;</span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.posts.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.posts&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;/a&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"> </span><br><span class="line">&#123;% if site.categories.length &gt; 0 %&#125;</span><br><span class="line">  &#123;% set categoriesPageQuery = site.pages.find(&#123;type: &#x27;categories&#x27;&#125;, &#123;lean: true&#125;) %&#125;</span><br><span class="line">  &#123;% set hasCategoriesPage = categoriesPageQuery.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-categories&quot;&gt;</span><br><span class="line">    &#123;% if hasCategoriesPage %&#125;&lt;a href=&quot;&#123;&#123; url_for(categoriesPageQuery[0].path) &#125;&#125;&quot;&gt;&#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.categories.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.categories&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &#123;% if hasCategoriesPage %&#125;&lt;/a&gt;&#123;% endif %&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if site.tags.length &gt; 0 %&#125;</span><br><span class="line">  &#123;% set tagsPageQuery = site.pages.find(&#123;type: &#x27;tags&#x27;&#125;, &#123;lean: true&#125;) %&#125;</span><br><span class="line">  &#123;% set hasTagsPage = tagsPageQuery.length &gt; 0 %&#125;</span><br><span class="line">  &lt;div class=&quot;site-state-item site-state-tags&quot;&gt;</span><br><span class="line">    &#123;% if hasTagsPage %&#125;&lt;a href=&quot;&#123;&#123; url_for(tagsPageQuery[0].path) &#125;&#125;&quot;&gt;&#123;% endif %&#125;</span><br><span class="line">      &lt;span class=&quot;site-state-item-count&quot;&gt;&#123;&#123; site.tags.length &#125;&#125;&lt;/span&gt;</span><br><span class="line">      &lt;span class=&quot;site-state-item-name&quot;&gt;&#123;&#123; __(&#x27;state.tags&#x27;) &#125;&#125;&lt;/span&gt;</span><br><span class="line">    &#123;% if hasTagsPage %&#125;&lt;/a&gt;&#123;% endif %&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>查了一下url_for是转码用的，可能和跳转有关，我们来看一下这三条语句</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(categoriesPageQuery[0].path) &#125;&#125;&quot;&gt;</span><br><span class="line">&lt;a href=&quot;&#123;&#123; url_for(tagsPageQuery[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>芜湖，一对比几乎可以确定问题出在这儿，第一行的代码格式与下两行明显不一样，其中的||正好对应%7C%7C<br>我们直接把第一行的格式修改的和下面两行差不多</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>再测试，成功！花了一晚上时间想这个好难啊QAQ</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>打开\themes\next\layout_macro\sidebar.swig<br>找到archive段中的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives).split(&#x27;||&#x27;)[0] | trim &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>修改为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;a href=&quot;&#123;&#123; url_for(theme.menu.archives[0].path) &#125;&#125;&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>即可</p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>博客搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/01/25/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>关于本站点</title>
+    <url>/2022/01/26/%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99%E7%82%B9/</url>
+    <content><![CDATA[<p><em><strong>这里是风雪归心的小屋</strong></em><br><em><strong>欢迎访问</strong></em><br><em><strong>内容基本上是随手记的笔记~</strong></em></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>复试要点</title>
+    <url>/2022/03/28/%E5%A4%8D%E8%AF%95%E8%A6%81%E7%82%B9/</url>
+    <content><![CDATA[<h1 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h1><p>缴费;<br>编程测试(手写，拍照上传，不计分数，但是影响印象);<br>外语水平测试(翻译专业文献);<br>专业知识问答(874选两门);<br>准备个人PPT(老师会根据PPT问问题);</p>
+<p>PPT内容:科研经历没有的话写课设毕设内容<br>获奖和学术成果没有就删了</p>
+<h2 id="研究生阶段的科研计划或其他个人规划："><a href="#研究生阶段的科研计划或其他个人规划：" class="headerlink" title="研究生阶段的科研计划或其他个人规划："></a>研究生阶段的科研计划或其他个人规划：</h2><p>·复试结束后，继续学习编程课程，同时学习人工智能神经网络方面的知识。争取达到科班水平。提前进入老师实验室，提升专业知识技能。以饱满的激情投入到学习中去。<br>·研一阶段，扎实掌握专业基础，并寻找适合自己的科研方向。并判断自己是否适合科研道路，是否做好读博/出国的决定。<br>·研二阶段，在自己选择的方向上做出成果，着手论文书写工作。如果选择了工作道路，还需要做好实习准备。<br>·研三阶段，完美完成毕业工作。并规划好人生的道路，沿道路一直走下去。</p>
+<p>是否愿意调剂为非全日制：否</p>
+<h2 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h2><p>大多数跟数据结构相关，不难<br>往年题：<br>①约瑟夫问题：n个人围成一圈，从第一个人开始报数，第m个人退出，依次继续，直到最后一个人留下。<br>编写函数，求解约瑟夫问题，对指定的n,m，求最后留下的人的初始编号是多少。<strong>要求用单向链表模拟实现</strong><br>②检测字符串是否为IPV4<br>③大数相加<br>④旋转矩阵<br>⑤ZIGZAG<br>⑥统计文件中大小写字母、数字个数。</p>
+<h2 id="英语"><a href="#英语" class="headerlink" title="英语"></a>英语</h2><p>双绞线···找一本专业词汇还有python。要求朗读后翻译。(扇贝单词里面有)</p>
+<h2 id="专业课题目"><a href="#专业课题目" class="headerlink" title="专业课题目"></a>专业课题目</h2><p>874三门里面选两门，数据结构一定要选(比较简单)，概念题多。</p>
+<h2 id="PPT问答"><a href="#PPT问答" class="headerlink" title="PPT问答"></a>PPT问答</h2><p>1、PPT准备，最主要的是把PPT熟悉，保证写上去的东西都能说清楚，并且针对他们的问题能答上，毕业论文很重要。<br>2、专业知识：<br>①《深度学习入门》：基础，只有python基础语法，有一个简单项目，mnist手写书数字识字。适合0基础。<br>②吴恩达的机器学习课程，需要一定的基础知识。<br>③周志华的西瓜书和南瓜书，进阶，难。<br>人工智能可以看李宏毅的作业CSDN；</p>
+<h2 id="专业方向："><a href="#专业方向：" class="headerlink" title="专业方向："></a>专业方向：</h2><p>出成绩就发邮件，一个星期不回就换老师，可以参加实验室的面试；<br>几乎所有方向都有：数据库；计算机网络；网安；计算机图形学（游戏）；算法；OS；软件；</p>
+<p>张严辞：有图形学基础，搞游戏引擎开发的，要求很优秀的才行。<br>赵启军：论文产出好，想搞学术的去<br>吕建成：实验室项目多，资源多，略卷，老师好，时间少。<br>徐文政：很好，毕业要求学术发顶会<br>朱敏：要求严</p>
+]]></content>
+      <categories>
+        <category>考研</category>
+      </categories>
+      <tags>
+        <tag>考研</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将关于界面直接改成文章内容</title>
+    <url>/2022/01/26/%E5%B0%86%E5%85%B3%E4%BA%8E%E7%95%8C%E9%9D%A2%E7%9B%B4%E6%8E%A5%E6%94%B9%E6%88%90%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9/</url>
+    <content><![CDATA[<p>直接打开E:\Blog\themes\next_config.yml进行设置<br>找到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /|| home</span><br><span class="line">  about: /about/|| user</span><br><span class="line">  tags: /tags/|| tags</span><br><span class="line">  categories: /categories/|| th</span><br><span class="line">  archives: /archives/|| archive</span><br></pre></td></tr></table></figure>
+<p>这段代码中如 tags: /tags/|| tags这一句<br>第一个tags是指menu中的tags<br>第二个tags是指我们在网页中点开tags后的子域名,比如我现在点开tags后就是<a href="https://wangyier.top/tags/">https://wangyier.top/tags/</a> 可以看到子域名就是第二个tags<br>第三个tags 可以理解为注释（其实不是注释，应该是一个固定格式，删了好像有影响）</p>
+<p><strong>现在来说说应该怎么点开about后直接显示一篇内容</strong><br>我们新建一篇名为about的文章 hexo new about<br>现在在主题config中的about属性中修改属性为</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/1/26/about/|| user</span><br></pre></td></tr></table></figure>
+<p>test<br>测试失败<br>修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/01/26/about/|| user</span><br></pre></td></tr></table></figure>
+<p>test<br>测试成功！<br>现在把about改成 关于本站点<br>1.把E:\Blog\source_posts\about.md修改为E:\Blog\source_posts\关于本站点.md<br>2.把theme中的_config.yml 中的menu中的about修改如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/01/26/关于本站点/|| user</span><br></pre></td></tr></table></figure>
+<p>test 失败<br>显示和之前一样重命名about为关于本站点好像无效<br>直接把该文章删掉，再hexo new 关于本站点<br>test<br>测试成功！</p>
+<p><strong>现在修改 关于本站点 的内容就OK了！</strong></p>
+]]></content>
+      <categories>
+        <category>博客搭建</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>博客搭建</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>操作系统信号量题目技巧</title>
+    <url>/2022/03/30/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%A2%98%E7%9B%AE%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<h1 id="生产者消费者问题-吸烟者问题"><a href="#生产者消费者问题-吸烟者问题" class="headerlink" title="生产者消费者问题(吸烟者问题)"></a>生产者消费者问题(吸烟者问题)</h1><h2 id="同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系"><a href="#同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系" class="headerlink" title="同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系"></a>同步：生产了产品才能被消费、消费完了才有空位才能重新生产；也就是full和empty之间的关系</h2><p>full表示还有多少个产品可以消费<br>empty表示还有多少个空位可以重新生产（注意初值）</p>
+<p>生产者过程：<br>首先需要一个空位p(empty)<br>生产完后多了一个产品v(full)</p>
+<p>消费者过程：<br>首先需要一个产品p(full)<br>消费完后多了一个空位v(empty)</p>
+<h2 id="互斥：注意哪些东西不能同时访问-mutex-初值为1"><a href="#互斥：注意哪些东西不能同时访问-mutex-初值为1" class="headerlink" title="互斥：注意哪些东西不能同时访问 mutex 初值为1"></a>互斥：注意哪些东西不能同时访问 mutex 初值为1</h2><h1 id="读者写者问题"><a href="#读者写者问题" class="headerlink" title="读者写者问题"></a>读者写者问题</h1><p>读者写者问题主要是为了解决互斥问题。读和读之间可以同时访问；读和写、写和写之间是互斥的<br>引入计数器counter；表示读的人</p>
+<h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><p>mutex<br>写过程是不容其他过程的，可以直接P(mutex)<br>而读过程P(mutex)受计数器counter的影响；需要考虑是不是第一个读进程(负责P)；以及退出时是不是最后一个推出的(负责V)<br>rw，读写之间的互斥</p>
+<h1 id="哲学家问题"><a href="#哲学家问题" class="headerlink" title="哲学家问题"></a>哲学家问题</h1><p>哲学家问题的关键时限制并行，三种思路<br>1、限制申请条件(破坏死锁条件)<br>比如规定单号哲学家先取左边；双号(if i%2==0)哲学家先取右边筷子</p>
+<p>2、限制信号量并行数<br>如：限制同一时间只能有一个哲学家就餐(禁止并行)</p>
+<p>3、限制哲学家只有取得两只筷子时才能就餐(破坏死锁条件)</p>
+<h1 id="理发师问题-涉及取号叫号"><a href="#理发师问题-涉及取号叫号" class="headerlink" title="理发师问题(涉及取号叫号)"></a>理发师问题(涉及取号叫号)</h1><p>理发师、营业员都是这一类<br>同步：顾客的取号和工作人员的叫号通过同步信号量实现，顾客到达取号后就P操作排队，因为信号量机制中P会把自己阻塞并进入阻塞队列。先来的顾客就在前面<br>互斥：取号机只有一个；可以通过队列实现叫号</p>
+<h1 id="做题技巧"><a href="#做题技巧" class="headerlink" title="做题技巧"></a><strong>做题技巧</strong></h1><p>1.审题 找对应题型<br>2.找到临界资源 确定互斥信号量<br>3.找到进程之间的同步关系 确定同步信号量<br>4.写出代码 添加注释<br>5.回顾题目 看是否满足要求<br>6.外层写同步信号量；内层写互斥信号量(反了的话可能会出问题)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">P(empty)</span><br><span class="line">    P(mutex)</span><br><span class="line">        具体操作</span><br><span class="line">    V(mutex)</span><br><span class="line">V(full)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>考研</category>
+      </categories>
+      <tags>
+        <tag>考研</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>每日一篇经济学人</title>
+    <url>/2022/04/01/%E6%AF%8F%E6%97%A5%E4%B8%80%E7%AF%87%E7%BB%8F%E6%B5%8E%E5%AD%A6%E4%BA%BA/</url>
+    <content><![CDATA[<h2 id="DAY-1-Genetic-tests-for-pets——Testing-dogs’-DNA-is-increasingly-popular-and-full-of-surprises"><a href="#DAY-1-Genetic-tests-for-pets——Testing-dogs’-DNA-is-increasingly-popular-and-full-of-surprises" class="headerlink" title="DAY 1:Genetic tests for pets——Testing dogs’ DNA is increasingly popular, and full of surprises."></a>DAY 1:Genetic tests for pets——Testing dogs’ DNA is increasingly popular, and full of surprises.</h2><p><a href="https://www.bilibili.com/video/BV1S94y1o7QV?spm_id_from=0.0.header_right.history_list.click">https://www.bilibili.com/video/BV1S94y1o7QV?spm_id_from=0.0.header_right.history_list.click</a></p>
+<p>Carnegie <font color= red>Violet</font> dog-fuller lives a happy life in Hollywood. She enjoys <font color= red>munching</font> ice cubes and listening to Snoop Dogg. Life was not always easy. Found as an injured <font color= red>stray</font> in Santa Monica, she spent time in a rescue centre before being adopted by Gregg and Linday last year.They reckoned she was a French Bulldog mix. But a DNA test revealed her to be more American Staffordshire Terrier (39%) than French Bulldog (24%), with significant Pomeranian genes (16%). “We were shocked,” admits Mr Fuller.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Violet n.紫罗兰，此处应该是名字</span><br><span class="line">munch (on/at) sth vt/vi.咀嚼某物</span><br><span class="line">stray vi.走失 adj.走失的 n.走失的宠物/家畜</span><br></pre></td></tr></table></figure>
+
+<p>Genealogy was once the <font color= red>preserve</font> of elite dogs. Their breeders take a special interest in keeping bloodlines pure, to create new champions and to raise the prices of <font color= red>puppies</font>. Now common <font color= red>mutts</font> are having their <font color= red>pedigrees</font> traced. Wisdom Panel, a firm that tests pet DNA, said on March 3rd that its database had expanded to 3m animals (<font color= blue>over 95% of them dogs</font>), up from 1m in 2018. Embark Veterinary, a similar firm which has 1m dogs in its database, was valued at $700m in July after a $75 investment.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preserve n.私人领域、专属领域</span><br><span class="line">puppy n.小狗，幼犬</span><br><span class="line">mutt n.狗，杂交狗</span><br><span class="line">pedigree n.动物血统记录 a.纯种的，血统优良的</span><br><span class="line">over 95% of them dogs 其中超过95%是狗</span><br></pre></td></tr></table></figure>
+
+<p>During the pandemic 23m Americans adopted puppies, according to the American <font color= red>Society</font> for the Prevention of <font color= red>Cruelty</font> to Animals. Rebecca Chodroff Foran, <font color= red>research director</font> at Wistom Panel, thinks this trend has <font color= red>collided</font> with another: the growth of human-DNA bussiness. Owners “now consider their pets to be key numbers of the family”, she says.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">society n.协会</span><br><span class="line">cruelty n.残忍，虐待，残暴的行为</span><br><span class="line">research director 研究总监</span><br><span class="line">collide with 与···相撞</span><br></pre></td></tr></table></figure>
+
+<p>Animal DNA tests work much like human ones. They compare genetic markers with a database of pets with verified pedigrees, revealing <font color= red>canine</font> lineage and potional health problems. Embark claims 99.9% accuracy; Wisdom Panel claims over 98%.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">canine a.狗的</span><br></pre></td></tr></table></figure>
+
+<p>Some owners are horrified to discover that their costly <font color= red>crossbreed</font> is in fact a mix of entirely different breeds. But owners of adopted and <font color= red>rescue dogs</font>, which make up 67% of Wisdom Panel’s database, are keen to learn. Murrary, who lives in New York with his owner Erica Hyman, looks like a Jack Russell but with his uprigtht years. He turned out to be a mix of 23 breeds. “Now I just tell people ‘He’s just a dog’”, says Ms Hyman.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">crossbreed n.杂交品种</span><br><span class="line">rescue dog 搜救犬</span><br></pre></td></tr></table></figure>
+
+<p>Chico Lopez, who breeds American Pit Bull Terriers, thinks DNA is a <font color= red>decent</font> investment for mutts. He compares them to second-hand cars: “You don’t know if the engine comes from a Toyota, the transmission from a Bugatti and the tyres from a little motorcycle, so you need to…find out what is going to break first.” But those wanting to pureblood, he says, should not rely on DNA, as <font color= red>reputable</font> breeders already have accurate knowlegde of a dog’s ancestor.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">decent a.恰好的 </span><br><span class="line">decent investment 不错的投资</span><br><span class="line">reputable a.值得尊敬的，声誉良好的</span><br></pre></td></tr></table></figure>
+
+<p>Owners of adopted dogs like searching for long-lost kin. About 12% of dogs on Embark’s database discover a <font color= red>sibling</font>, parent or offspring. And, as with human DNA testing, there is the possibility of <font color=blue>stumbling on a family secret</font>. Some dog owners are now finding that their sweet pooch fathered a little in another state before absconding. <font color= red>Paw form</font>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sibling n.兄弟姐妹</span><br><span class="line">stumbling on a family secret 撞破一个家庭秘密</span><br><span class="line">Paw form 四处留情</span><br></pre></td></tr></table></figure>
+
+<h2 id="DAY-2-Bartleby-Body-of-research——Online-work-has-changed-the-nature-of-non-verb-com-munication"><a href="#DAY-2-Bartleby-Body-of-research——Online-work-has-changed-the-nature-of-non-verb-com-munication" class="headerlink" title="DAY 2:Bartleby:Body of research——Online work has changed the nature of non-verb com-munication"></a>DAY 2:Bartleby:Body of research——Online work has changed the nature of non-verb com-munication</h2><p><a href="https://www.bilibili.com/video/BV1P34y1t7RX?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1P34y1t7RX?spm_id_from=333.337.search-card.all.click</a></p>
+<p>Communication is an essential part of leadership. And body language is an essential part of communication. <font color= blue>On those slim pillars rests a mini-industry of research and advice into how executives can influence, encourage and <font color= red>ascend</font> without needing to say a word</font>. The pandemic has made much of it <font color= red>redundant</font>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ascend v.上升</span><br><span class="line">redundant a.冗余的</span><br><span class="line">一种关于研究和建议高管如何不需要说一句话就能够影响、鼓励、晋升的微型产业建立在了这些细小的支柱上</span><br></pre></td></tr></table></figure>
+
+<p>Plenty of studies have looked into the non-verbal behaviour that <font color= red>makes out”emergent leaders”</font>, people who do not have a <font color= red>specified</font> role in the <font color= red>hierarchy</font> but naturally assume a position of authority in groups. They are a bag of <font color= red>tics</font>. They nod; they touch others but not themselves; they gesture; they <font color= red>furrow</font> their brows; they hold themselves erect; their facial expressions are more <font color= red>animated</font>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">make out 造就</span><br><span class="line">emergent a.紧急的/自发的 这里可以理解为天生的领袖？</span><br><span class="line">specify vt.指定 </span><br><span class="line">hierarchy  [ˈhaɪərɑːki]  n. 阶级</span><br><span class="line">tic n.抽搐 a bag of tics 充满了动作</span><br><span class="line">furrow n.犁沟;沟;车辙;(脸上的)皱纹</span><br><span class="line">       v.犁;(使)皱(眉)，蹙(额)</span><br><span class="line">brow n.额头</span><br><span class="line">erect a.垂直的 vt.建造  </span><br><span class="line">animate vt.使有生气，使生气勃勃</span><br><span class="line">animated a.有生气的</span><br></pre></td></tr></table></figure>
+
+<p>Other research suggests that, to win votes in an election, candidates should deliver speeches with their feet <font color= red>planted</font> apart. The seconed-most popular TED talk claims that <font color= blue>two minutes of private</font>, <font color= red>hands-on-hips</font> “power posing” can <font color= red>infuse</font> a job candidate with confidence and improve others’ perception of them.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plant vt.树立，安放</span><br><span class="line">two minutes of private 私下两分钟</span><br><span class="line">hip n.臀部，髋骨 </span><br><span class="line">hands-on-hip 双手叉腰</span><br><span class="line">infuse vt.使具有(流入)</span><br></pre></td></tr></table></figure>
+
+<p>Gazing can foster a sense of psychological safety as well as <font color= red>confer</font> authority: in a recent paper, a <font color= red>trio</font> of research from Havard Bussiness School found that receiving more eye contact from a <font color= red>bigwig</font> led to greater participation in group interactions. Leaders who adopt <font color= red>open</font> body positions, with arms and legs uncrossed, are also more likely to encourage contribution.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">confer=bestow vt.授予</span><br><span class="line">trio n.三人小组</span><br><span class="line">bigwig n.大人物</span><br><span class="line">open a.开放的</span><br></pre></td></tr></table></figure>
+
+<p>There are three problems with this body of research on non-verbal communication. One is that so much of it is <font color= red>blindingly</font> obvious. Nodding at someone rather than shaking head in incredulity when they are speaking to you——this dose indeed send a powerful signal. But so does punching someone in the face, <font color= blue>and no one thinks that requires a journal publication.</font></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blind a.瞎的</span><br><span class="line">blinding a.刺眼的，炫目的</span><br><span class="line">blindingly ad.极其地=extremely=especially</span><br><span class="line">credulity n.轻信</span><br><span class="line">incredulity n.怀疑，不信</span><br><span class="line">journal n.报刊，杂志</span><br><span class="line">没人需要阅读期刊论文才明白这个道理</span><br></pre></td></tr></table></figure>
+
+<p>A second problem is that people look for different things from their bosses. <font color= red>Frowning</font> is seen as a mark of emergent leaders but not of suppositive ones; <font color= blue>the reverse is true of smiling</font>. (The effect of similing with <font color= red>lowered eyebrows</font> <font color= pink>cries out</font> for study.) A recent paper found that male <font color= red>recipients</font> regarded bosses who used emojis, a form of non-quite-verbal communication, in an email as more effective, but that female recipients perceived them as less effective. </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">frown vi.皱眉头</span><br><span class="line">be true of 适用于；符合于</span><br><span class="line">关于微笑（的观点）正好相反</span><br><span class="line">lowered eyebrow 与 raised eyebrowed 相对应. raise eyebrow 表示不赞成 那么lower eyebrow 呢？</span><br><span class="line">cry out for 迫切需要</span><br><span class="line">整句：关于垂眉微笑的影响更需要研究</span><br><span class="line">recipient n.收件人</span><br></pre></td></tr></table></figure>
+
+<p>The third problem is newer. Almost all of the research on body language dates from a time of <font color= red>in-person</font> interactions. Even when the pandemic <font color= red>wanes</font> and offices in the West refill, most buildings will not return to full capacity. Employees will keep working remotely for at least part of the week; <font color= red>Zoom</font> will remain <font color= red>integral</font> to white-collar working lives. And if there is one thing for which online interactions are not suited, it is body language.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">in-person ad.亲自 a.亲自的</span><br><span class="line">wane=fade=decrease [weɪn] vi.衰落、减弱</span><br><span class="line">refill vt.再装满</span><br><span class="line">Zoom 视频会议软件</span><br><span class="line">integral a.完整的→不可或缺的</span><br></pre></td></tr></table></figure>
+
+<p>That is partly because bodies themselves are largely hidden from view: whatever language they are speaking, it is hard to hear them. You will know the partners, pets and <font color= red>home-decor</font> choices of new colleagues before you will know how tall they are. And although faces fill the video-conferencing screen, meaningfull eye contact is impossible.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">decor n.装饰风格</span><br></pre></td></tr></table></figure>
+
+<p>Once past a basic <font color= red>threshold</font> of <font color= red>attentiveness</font>——not looking down at your mobile phone, <font color= red>say</font>——most people have the same glassy-eyed <font color= red>stare</font>. If several faces appear on screen, these participants have no way of knowing that you are gazing specifically at them. (Angway, adimit it: the face you are looking at with most interest is your own.) If your camera is in the wrong place, you may think you are looking meaningfully at your team but you are actually just giving them a view of your <font color= red>nostrills</font>. Animated expressions are hard to <font color= red>spot</font>, particularly when people attending hybrid meetings in the office are <font color= blue>Lowry-like</font> figures seated metres away.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">threshold n.阈值</span><br><span class="line">attentiveness n.专心</span><br><span class="line">say v 假设</span><br><span class="line">not looking down at your mobile phone, say这一整句才是完整的插入语部分</span><br><span class="line">glassy a.(眼睛)无神的 呆滞的</span><br><span class="line">stare n.盯</span><br><span class="line">nostrill n.鼻孔</span><br><span class="line">spot v发现注意到=observe=notice</span><br><span class="line">Lowry-like 像Lowry画的火柴人一样</span><br></pre></td></tr></table></figure>
+
+<p>There are no good ways to compensate for these problems. One tactic is to go <font color= red>all in</font> on expressiveness, nodding <font color= red>furiously</font> and gesturing dementedly—— a small <font color= red>tile</font> of caged energy somewhere in the bottom left-hand corner of the screen. Another is to do a “Zoom loom”, placing yourself so close to the camera that you will give everyone nightmares.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">all-in a.不遗余力的 </span><br><span class="line">furiously ad.激烈地 猛烈地</span><br><span class="line">dementedly ad.焦躁地</span><br><span class="line">tile n.瓷砖 这里比喻了屏幕上面的头像框</span><br><span class="line">loom n.逼近 突然出现</span><br><span class="line">Zoom loom Zoom特写</span><br></pre></td></tr></table></figure>
+
+<p>The simpler option is not to think too hard about body language. At a few specific moments, like job interviews and <font color= red>set-piece</font> speeches, first impressions matter and a bit of <font color= red>self-conscious</font> posing <font color= red>pays off</font>. But posture is not leadership. If you want to give people a break from staring at a screen, turning off your camera is a good way to do it. If you want to <font color= red>waggle</font> your eyebrows, up or down, let them loose. And if you need to be told that looking at someone makes them feel valued, you have big issues. </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set-piece a.事先精心安排的</span><br><span class="line">self-conscious = intentional a.故意的、刻意的</span><br><span class="line">pay off</span><br><span class="line">waggle vt.来回摆动</span><br></pre></td></tr></table></figure>
+
+<h2 id="DAY-3-The-Theranos-trial-Blood-will-have-blood——A-jury-finds-a-former-Silicon-Valley-star-guilty-of-fraud"><a href="#DAY-3-The-Theranos-trial-Blood-will-have-blood——A-jury-finds-a-former-Silicon-Valley-star-guilty-of-fraud" class="headerlink" title="DAY 3: The Theranos trial: Blood will have blood——A jury finds a former Silicon Valley star guilty of fraud."></a>DAY 3: The Theranos trial: Blood will have blood——A jury finds a former Silicon Valley star guilty of fraud.</h2><p><a href="https://www.bilibili.com/video/BV1ti4y1Q7BL?spm_id_from=333.999.0.0">https://www.bilibili.com/video/BV1ti4y1Q7BL?spm_id_from=333.999.0.0</a></p>
+<p>On JANUARY 3RD, after seven days of <font color= red>delibration</font>, a 12-member jury in Silicon Valley found Elizabeth Homlmes, the entrepreneur behind a blood-testing <font color= red>startup</font>, guilty of four <font color= red>counts</font> of <font color= red>fraudulently</font> deceiving investors. Each count carries a <font color= red>prison term</font> of up to 20 years; <font color= blue>no date has been set for her sentencing</font>.She was <font color= red>acquitted</font> of four charges of deceiving patients and doctors; on three others the jury were <font color= red>deadlocked</font>. The <font color= red>verdict</font>, against which Ms Holmes’s lawyers are expected to <font color= red>appeal</font>, marks the collapse of a career that <font color= red>beguiled</font> the media, politicians and investors.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">delibration n.讨论，审议</span><br><span class="line">startup n.新型小型企业</span><br><span class="line">guilty of ``` 有···罪</span><br><span class="line">count n.罪状</span><br><span class="line">fraudulent a.欺骗的，欺诈的</span><br><span class="line">prison term 刑期</span><br><span class="line">set a date for 选定···日期 sentence v.宣判</span><br><span class="line">acquit sb of sth v.宣告无罪(罪名不成立)</span><br><span class="line">deadlock n.僵持不下(死锁) deadlocked a.僵持不下的</span><br><span class="line">verdict n.裁定</span><br><span class="line">appeal v.上诉</span><br><span class="line">beguile vt.欺骗</span><br></pre></td></tr></table></figure>
+
+<p>After dropping out of Stanford University in 2003 at the age of 19, Ms Holmes founded Theranos to develop a <font color= red>radical advance</font> in blood-testing technology that she hoped would allow hundreds of tests to be performed using a single tiny drop of blood rather than a full vial. The tantalising vision promised to make health care more effective and efficient.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">radical a.彻底的</span><br><span class="line">advance n.进步</span><br><span class="line">a drop of 一滴</span><br><span class="line">vial n.小瓶</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Unfortunately, Ms Holmes could not bring it to fruition. In voting to concict on four counts, the jury concluded that, aware of her company’s failure, Ms Holmes intentionally lied about its prospects and capabilities, and so crossed the fine line from promotion to deliberate fraud——a step she explicity denied in her own testimony.</p>
+<p>In many ways Theranos differed little from many hot startups. It raised more than $1bn, reached an extravagant theoretical valuation (in its case $9bn) before crashing without ever going public and disintegrating into a vast graveyard of unfeasible ideas. Typically, executives behind such ventures are quickly forgotten. But Ms Holmes’s path differed at least in part because even though her company’s products failed, her presence about broader story proved unusually compelling.</p>
+<p>In building Theranos, Ms Holmes assembled a remarkable collection of acolytes. Her board was filled with several former secretaries of state and defence. Joe Bidden, while vice-prisident, called Theranos “the laboratory of future” and Ms Holmes “an inspiration”. The company’s shocking failure suggested her famous followers had fed merely on type. The fashion press was besotted by Ms Holmes’s ability to present herself. The steve Jobs-inspired black turtlenecks she wore at work were seen as reflecting authority. The opennecked shirts and blouses she donned during the trial were a sign of appealing vulnerability, augmented by the nappy bag she carried to court, which signalled to jury the costs of a potential prison term to a young mother and her infant child (who was born in July). Reporters and other onlookers waited for hours to nab a set in the packed courtroom.</p>
+<p>Ms Holmes’s defence followed two distinct lines. The most obvious hinged on naivety. She may have been wrong about Theranos’s prospecets, the argument went, but that is not a crime. Startup investors are supposed to be a sophisticated lot, willing to wager based on deep insights in the hope of a big return, while understanding that long shots can fail. The prosecutors’ counterargument rested primarily on the presentations which Ms Holmes made to investors. These appeared to exaggerate potential sales and trumpet non-existent endorsements from the armed forces and big pharmaceutical companies. The single substantive request made by the jurors during their delibretion was to rehear a presentation that had been recorded, suggesting they were parsing what precisely she had been telling her backers.</p>
+<p>Ms Holmes’ sound line of argument, the so-called Svengali defence, was particularly appealing to hot Hollywood, but its impact on the jury was unclear. She claimed at the trial to have been sexually and emotionally abused and manuplated by Ramesh “Sunny” Balwani, her ex-partner and Theranos’s former chief operating officer. As such, her lawyers posited, she could not be held responsible for her actions.</p>
+<p>Mr Balwani has strongly denied all allegations. His own trial for fraud charges will begin next month, ensuring the Theranos saga will not end soon. And even after the last gavel is pounded, there will be more to come. In the lead-up to the verdict Hulu, a capable network, released photos from an upcoming mini-series on Ms Holmes’s story, starring Amanda Seyfried. Ms Holmes may end up going to prison, but she will not be going away.</p>
+]]></content>
+      <categories>
+        <category>English</category>
+      </categories>
+      <tags>
+        <tag>考研</tag>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>游戏通关记录及杂谈</title>
     <url>/2022/02/11/%E6%B8%B8%E6%88%8F%E9%80%9A%E5%85%B3%E8%AE%B0%E5%BD%95%E5%8F%8A%E6%9D%82%E8%B0%88/</url>
     <content><![CDATA[<h1 id="单机"><a href="#单机" class="headerlink" title="单机"></a>单机</h1><p>在2022/2/11 之前通关的游戏</p>
@@ -1451,34 +1480,5 @@ while(1)
         <tag>c++</tag>
         <tag>编程</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>将关于界面直接改成文章内容</title>
-    <url>/2022/01/26/%E5%B0%86%E5%85%B3%E4%BA%8E%E7%95%8C%E9%9D%A2%E7%9B%B4%E6%8E%A5%E6%94%B9%E6%88%90%E6%96%87%E7%AB%A0%E5%86%85%E5%AE%B9/</url>
-    <content><![CDATA[<p>直接打开E:\Blog\themes\next_config.yml进行设置<br>找到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /|| home</span><br><span class="line">  about: /about/|| user</span><br><span class="line">  tags: /tags/|| tags</span><br><span class="line">  categories: /categories/|| th</span><br><span class="line">  archives: /archives/|| archive</span><br></pre></td></tr></table></figure>
-<p>这段代码中如 tags: /tags/|| tags这一句<br>第一个tags是指menu中的tags<br>第二个tags是指我们在网页中点开tags后的子域名,比如我现在点开tags后就是<a href="https://wangyier.top/tags/">https://wangyier.top/tags/</a> 可以看到子域名就是第二个tags<br>第三个tags 可以理解为注释（其实不是注释，应该是一个固定格式，删了好像有影响）</p>
-<p><strong>现在来说说应该怎么点开about后直接显示一篇内容</strong><br>我们新建一篇名为about的文章 hexo new about<br>现在在主题config中的about属性中修改属性为</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/1/26/about/|| user</span><br></pre></td></tr></table></figure>
-<p>test<br>测试失败<br>修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/01/26/about/|| user</span><br></pre></td></tr></table></figure>
-<p>test<br>测试成功！<br>现在把about改成 关于本站点<br>1.把E:\Blog\source_posts\about.md修改为E:\Blog\source_posts\关于本站点.md<br>2.把theme中的_config.yml 中的menu中的about修改如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">about: /2022/01/26/关于本站点/|| user</span><br></pre></td></tr></table></figure>
-<p>test 失败<br>显示和之前一样重命名about为关于本站点好像无效<br>直接把该文章删掉，再hexo new 关于本站点<br>test<br>测试成功！</p>
-<p><strong>现在修改 关于本站点 的内容就OK了！</strong></p>
-]]></content>
-      <categories>
-        <category>博客搭建</category>
-      </categories>
-      <tags>
-        <tag>博客搭建</tag>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>关于本站点</title>
-    <url>/2022/01/26/%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99%E7%82%B9/</url>
-    <content><![CDATA[<p><em><strong>这里是风雪归心的小屋</strong></em><br><em><strong>欢迎访问</strong></em><br><em><strong>内容基本上是随手记的笔记~</strong></em></p>
-]]></content>
   </entry>
 </search>
